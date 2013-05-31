@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "description": "IMAP Server module for Nodejs",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/xpensia/ImapServer.git"
@@ -15,8 +12,8 @@
     "server",
     "email"
   ],
-  "license": "BSD",
+  "license": "MIT",
   "dependencies": {
-    "imap-parser": "0.0.0"
+    "imap-parser": "git://github.com/hashmail/imap-parser.git"
   }
 }
