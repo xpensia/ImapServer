@@ -16,7 +16,7 @@ plugin.initialize = function(opts) {
 };
 
 plugin.getCapabilities = function(connection) {
-    if(this.notes._credentials) {
+    if(this.notes._credentials && !connection.isSecure) {
         return ['STARTTLS'];
     }
     else {
@@ -65,6 +65,7 @@ plugin.starttls = function(connection, tag) {
             clearText.authorized = true;
         }
         connection.stream = clearText;
+        connection.isSecure = true;
         connection.resume();
 
         connection.callPlugins('secure', [connection]);
