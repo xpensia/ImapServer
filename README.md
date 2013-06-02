@@ -1,32 +1,73 @@
-# ImapServer
+# imap-server
 
 IMAP Server module for Nodejs
 
-## Built-in plugins
+This project is inspired by [Haraka](http://haraka.github.io/) a SMTP server for Nodejs.
+All features of an IMAP server are implemented as plugins, so it can adapt to many use cases.
 
-ImapServer provides some built-in plugins.
+## Installation
 
-```javascript
-var plugins = require('imap-server/plugins');
-
-server.use(plugins.announce);
+```sh
+npm install imap-server
 ```
 
+## Usage
 
-### announce
+```javascript
+var ImapServer = require('imap-server');
+var server = ImapServer();
 
-This plugin wellcome the client and announce his capabilities.
-It's required by the IMAP spec, but you can implement your own.
+// use plugin
+var plugins = require('imap-server/plugins');
+server.use(plugins.announce);
+/* use more builtin or custom plugins... */
 
-### starttls
+var net = require('net');
+net.createServer(server).listen(process.env.IMAP_PORT || 143);
+```
 
-This plugin provide STARTTLS support.
+## Plugins
 
+### Built-in plugins
 
-### debug
+#### announce
+
+Required by [IMAP4rev1][imap]. This plugin also send the optional capability list.
+
+#### starttls
+
+Provide encrypted communication for IMAP via the [STARTTLS][starttls] command.
+
+```javascript
+server.use(plugins.starttls, {
+    /* mandatory hash of options for crypto.createCredentials
+     * http://nodejs.org/api/crypto.html#crypto_crypto_createcredentials_details
+     * with at least key & cert
+     */
+    key: Buffer,
+    cert: Buffer
+});
+```
+
+#### debug
 
 This plugin log various information.
 
+### authentification helper
+
+Here's how to implement auth plain without worrying about the underlying protocol:
+```javascript
+var WrapAuthPlain = require('imap-server/util/auth_plain_wrapper');
+
+exports.auth_plain = WrapAuthPlain(function(connection, username, password, next) {
+    if(username == "john.doe@example.com" && password == "foobar") {
+        next(null, 'OK');
+    }
+    else {
+        next(null, 'NO');
+    }
+});
+```
 
 ## Notes
 
@@ -35,8 +76,6 @@ This plugin log various information.
 * rfc3501 (IMAP4rev1) : http://tools.ietf.org/html/rfc3501
 * return flags : OK, NO, BAD
 
-## Plugins events
-
 * getCapabilities ( connection ) Sync, return [cap, ...]
 * register
 * connection ( connection, next )
@@ -44,13 +83,7 @@ This plugin log various information.
 * auth_* ( next )
 * unknown_command ( connection, line, next )
 
-## TODOs
 
-### must
-
-* auth workflow
-* starttls Plugins
-
-### addons
-
-* SASL-IR : http://tools.ietf.org/html/rfc4959
+[imap]: http://tools.ietf.org/html/rfc3501 "RFC 3501"
+[starttls]: http://tools.ietf.org/html/rfc2595 "RFC 2595"
+[sasl-ir]: http://tools.ietf.org/html/rfc4959 "RFC 4959"

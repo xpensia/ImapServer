@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "description": "IMAP Server module for Nodejs",
   "main": "index.js",
+  "author": {
+    "name": "Jean-Sébastien Tremblay",
+    "email": "jeansebtr@xpensia.com",
+    "url": "http://blog.jeansebtr.com/"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/xpensia/ImapServer.git"
@@ -15,5 +20,8 @@
   "license": "MIT",
   "dependencies": {
     "imap-parser": ">= 0.0.1"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
   }
 }
