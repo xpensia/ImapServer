@@ -25,6 +25,12 @@
   "dependencies": {
     "imap-parser": ">= 0.0.1"
   },
+  "devDependencies": {
+    "coffee-script": "1.6.x"
+  },
+  "scripts": {
+    "prepublish": "./node_modules/.bin/coffee -c ./lib/ ./plugins/ ./util/"
+  },
   "engines": {
     "node": ">= 0.10.0"
   }

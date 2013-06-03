@@ -1,5 +1,5 @@
 
-var b64Stream = require('./base64_stream.js');
+var b64Stream = require('./base64_stream');
 
 function WrapAuthPlain(cb) {
     function auth_plain(connection, data, next) {

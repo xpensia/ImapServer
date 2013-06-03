@@ -1,5 +1,10 @@
 
-var Server = require('./lib/server.js');
+try {
+    require('coffee-script');
+}
+catch(e) {}
+
+var Server = require('./lib/server');
 
 var ImapServer = module.exports = function ImapServer() {
     var server = function ImapServer() {
@@ -10,4 +15,4 @@ var ImapServer = module.exports = function ImapServer() {
     return server;
 };
 
-ImapServer.States = require('./lib/states.js');
+ImapServer.States = require('./lib/states');
