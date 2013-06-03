@@ -12,6 +12,10 @@
     "type": "git",
     "url": "git://github.com/xpensia/ImapServer.git"
   },
+  "bugs": {
+    "url": "https://github.com/xpensia/ImapServer/issues",
+    "email": "jeansebtr+imap-server@xpensia.com"
+  },
   "keywords": [
     "imap",
     "server",
